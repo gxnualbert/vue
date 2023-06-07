@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- div 标签内的是模板 -->
+    <div id="app">
+            <span>{{message}}</span>
+            <br>
+
+            <!-- v-once 不会改变 -->
+            <span v-once>{{message}}</span>
+            <button @click="change">修改message</button>
+
+
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+
+        // root是根应用
+        const root={
+            data() {
+                return {
+                    message: 'hello vue!'
+                }
+            },
+            methods:{
+                change(){
+                    this.message="change"
+                }
+            }
+        }
+
+        // 创建vue app，要通过下面的挂在mount才能使用
+        const app=Vue.createApp(root)
+
+        const vm = app.mount("#app")
+
+    </script>
+</body>
+</html>
