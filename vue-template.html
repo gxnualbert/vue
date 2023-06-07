@@ -16,6 +16,9 @@
             <!-- v-once 不会改变 -->
             <span v-once>{{message}}</span>
             <button @click="change">修改message</button>
+            <hr>
+            <div>{{html}}</div>
+            <div v-html="html"></div>
 
 
     </div>
@@ -27,7 +30,8 @@
         const root={
             data() {
                 return {
-                    message: 'hello vue!'
+                    message: 'hello vue!',
+                    html:`<h1>html</h1>`
                 }
             },
             methods:{
