@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <div id="counter">
+        <span v-bind:title="message">
+            Counter:{{counter}}
+        </span>
+        <!-- v-on 添加一个事件监听器，如blur事件，click事件 -->
+        <button v-on:click="plus10">加10</button>
+        <hr>
+        <!-- 双向绑定 -->
+        <p>{{message}}</p>
+        <input v-model="message"><br>
+        <input v-model="formData.username"><br>
+        <input v-model="formData.password"><br>
+        <button v-on:click="submit">提交</button>
+        <br>
+        <hr>
+        <div v-if="show">v-if test!</div>
+        <button v-on:click="changeShow">改变show值</button>
+        <br>
+        <hr>
+        <ol>
+            <!-- 待办事项 -->
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ol>
+        <br>
+        <hr>
+
+        <!-- 复用组件TodoItem开始 -->
+        <ol>
+            <todo-item></todo-item>
+            <todo-item></todo-item>
+            <todo-item></todo-item>
+        </ol>
+        <!-- 复用组件TodoItem结束 -->
+        <br>
+        <hr>
+        <ol>
+
+            <!-- 将todos里面的每一个todoItem，绑定到子组件todo中 -->
+            将todos里面的每一个todoItem，绑定到子组件todo中
+            <todo-item v-for="todoItem in todos" v-bind:todo="todoItem"></todo-item>
+
+        </ol>
+
+
+    </div>
+
+    <script>
+        const TodoItem = {
+            // 模板
+            // 可以接收一些参数props，参数从父组件传递
+            props: ['todo'],
+            template: `<div>
+                    <li>This is a todo-----{{user}} <button @click='submit'>按钮</button> </li>
+                    
+                </div>`,
+            data() {
+                return {
+                    user: 'tom'
+                }
+            },
+            methods: {
+                submit() {
+                    console.log("hello component!")
+                }
+            }
+        }
+        // 创建vue应用之后，需要挂在应用。挂在到标签中，标签必须是唯一的
+        const Counter = {
+            // 加载组件TodoItem 到app中
+            components: {
+                TodoItem
+            },
+            data() {
+                return {
+                    counter: 1,
+                    message: "hello vue",
+                    formData: {
+                        username: "",
+                        password: ""
+                    },
+                    show: true,
+                    todos: [{ text: '起床' }, { text: '学习Java' }, { text: '弹吉他' }, { text: '看电影' }, { text: '买电脑' }, { text: '看毛片' }, { text: '剪头发' }, { text: '跑步' }, { text: '学习vue' }, { text: '睡觉' }]
+                }
+            },
+            // mounted 是一个钩子函数。会在浏览器的dom加载完成后执行
+            mounted() {
+                setInterval(() => {
+                    this.counter++
+                }, 1000)
+            },
+            // 事件方法调用 这里定义了我们要使用的方法，有可能是事件的回调函数，也有可能是我们主动调用的方法
+            methods: {
+                plus10() {
+                    this.counter = this.counter + 10
+                },
+                submit() {
+                    console.log(this.formData)
+                },
+                changeShow() {
+                    // 对show进行取反操作
+                    this.show = !this.show
+                }
+            }
+        }
+
+        // mount 里面要放最外层的容器的id counter
+        Vue.createApp(Counter).mount('#counter')
+    </script>
+</body>
+
+</html>
