@@ -2,7 +2,7 @@
     <p>Has published books:</p>
     <span>{{ author.books.length > 0 ? 'Yes' : 'No' }}</span>
     <br>
-    是用computer计算后
+    是用compute计算后
     <span>{{ publishedBooksMessage ? 'Yes' : 'No' }}</span>
 
 </template>
